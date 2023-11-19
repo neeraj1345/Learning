@@ -1,0 +1,87 @@
+1 project Creation (Learning)
+
+2 c# .net Core Web App (M.V.C)
+
+3 Install nuget Package 
+  (ENTITY, SQLserver, Tools, Desgin)
+
+4 Create Model
+
+ using System.ComponentModel.DataAnnotations;
+
+namespace Learning.Models
+{
+    public class StudentModel
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public int Standard { get; set; }
+        public int RollNo { get; set; }
+        public string Subject { get; set; }
+    }
+}
+
+
+5 Create Context Class (Inside Model)
+
+
+using Microsoft.EntityFrameworkCore;
+
+namespace Learning.Models
+{
+    public class LearningContext : DbContext
+    {
+        public LearningContext(DbContextOptions<LearningContext> options) : base(options) 
+        {
+        }
+        public DbSet<StudentModel> Tb_StudentDetail { get; set; }
+    }
+
+}
+
+
+6 Connection String ( Inside appsettings.json)
+
+ {
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "DefaultString": "Server=DESKTOP-2F1PRM5;Database=DbStudentDetail;Integrated security=True;"
+
+  },
+  "AllowedHosts": "*"
+}
+
+
+7 Program.cs (Add Context class reference) startup
+
+ using Learning.Models;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<LearningContext>
+    (option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultString")));
+     
+
+var app = builder.Build();
+
+8  Migration and Command and Check database
+
+   tools>Nuget Packages Manager>Packages Manager Console
+   PM> add-migration ABC
+   /*enter Key then*/
+
+  PM>update-database
+
+9 Create Controller
+
+10 Create View   
